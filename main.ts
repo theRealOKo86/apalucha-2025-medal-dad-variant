@@ -17,10 +17,22 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
             radio.setTransmitPower(7)
         } else if (1 == modes_array.indexOf(mode)) {
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
-            radio.setTransmitPower(3)
+            radio.setTransmitPower(tx_power_treasure_hunt)
         }
         led.stopAnimation()
         basic.showString("" + (mode))
+    } else if (input.buttonIsPressed(Button.A)) {
+        tx_power_treasure_hunt = Math.constrain(tx_power_treasure_hunt - 1, 1, 7)
+        radio.setTransmitPower(tx_power_treasure_hunt)
+        led.stopAnimation()
+        basic.showString("" + (tx_power_treasure_hunt))
+        basic.clearScreen()
+    } else if (input.buttonIsPressed(Button.B)) {
+        tx_power_treasure_hunt = Math.constrain(tx_power_treasure_hunt + 1, 1, 7)
+        radio.setTransmitPower(tx_power_treasure_hunt)
+        led.stopAnimation()
+        basic.showString("" + (tx_power_treasure_hunt))
+        basic.clearScreen()
     }
 })
 input.onButtonPressed(Button.A, function () {
@@ -75,6 +87,7 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     	
     }
 })
+let tx_power_treasure_hunt = 0
 let mode = ""
 let tones_array: number[] = []
 let modes_array: string[] = []
@@ -104,6 +117,7 @@ modes_array = ["lightshow", "treasure_hunt"]
 tones_array = [262, 294]
 mode = modes_array[0]
 let id = 42
+tx_power_treasure_hunt = 3
 basic.forever(function () {
     if (0 == modes_array.indexOf(mode)) {
         if (1 == rotate) {
